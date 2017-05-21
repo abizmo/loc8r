@@ -1,8 +1,7 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.review-container {
+  padding: 0 15px;
 }
 
-a {
-  color: #00B7FF;
+.review-header {
+  margin-bottom: 10px;
 }

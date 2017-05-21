@@ -1,3 +1,3 @@
 module.exports.about = function (req, res, next) {
-  res.render('index', { title: 'About Page' });
+  res.render('otherAbout', { title: 'About Page' });
 };
