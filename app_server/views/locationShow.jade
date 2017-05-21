@@ -1,52 +1,46 @@
 extend layout
 
+include _includes/sharedHTMLfunctions
+
 block content
   .page-header
     .row
       .col-lg-6
-        h1 Starcups
+        h1= location.name
 
   .row
     .col-xs-12.col-md-8
       .row
         .col-xs-12.col-md-6
-          span.glyphicon.glyphicon-star
-          span.glyphicon.glyphicon-star
-          span.glyphicon.glyphicon-star
-          span.glyphicon.glyphicon-star-empty
-          span.glyphicon.glyphicon-star-empty
-          p 125, High Street, Reading, RG6 1PS
+          +rate(location.rating)
+          p= location.address
 
           .panel.panel-primary
             .panel-heading
               h4 Opening Hours
             .panel-body
-              p Monday - Friday: 7:00am - 7:00pm
-              p Saturday: 8:00am - 5:00pm
-              p Sunday: closed
+              each hour in location.hours
+                if hour.closed
+                  p #{hour.days}: closed
+                else
+                  p #{hour.days}: #{hour.opening} - #{hour.closing}
 
           .panel.panel-primary
             .panel-heading
               h4 Facilities
             .panel-body
-              span.label.label-warning
-                span.glyphicon.glyphicon-ok
-                | &nbsp;Hot drinks
-              &nbsp;
-              span.label.label-warning
-                span.glyphicon.glyphicon-ok
-                | &nbsp;Food
-              &nbsp;
-              span.label.label-warning
-                span.glyphicon.glyphicon-ok
-                | &nbsp;Premium Wifi
+              each facility in location.facilities
+                span.label.label-warning
+                  span.glyphicon.glyphicon-ok
+                  | &nbsp;#{facility}
+                &nbsp;
 
         .col-xs-12.col-md-6.pull-right
           .panel.panel-primary
             .panel-heading
               h4 Location Map
             .panel-body
-              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center=51.455041,-0.9690884&zoom=17&size=400x350&sensor=false&markers=51.455041,-0.9690884&scale=2')
+              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lon}&zoom=17&size=400x350&sensor=false&markers=#{location.coords.lat},#{location.coords.lon}')
       .row
         .col-xs-12.col-md-12
           .panel.panel-primary
@@ -54,36 +48,19 @@ block content
               a.btn.btn-default.pull-right(href='/location/review/new') Add Review
               h4 Customer reviews
             .panel-body.review-container
-              .row
-                .review
-                  .well.well-sm.review-header
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star-empty
-                    span.glyphicon.glyphicon-star-empty
-                    &nbsp;
-                    span Simon Holmes
+              each review in location.reviews
+                .row
+                  .review
+                    .well.well-sm.review-header
+                      +rate(review.rating)
                       &nbsp;
-                      small 16 July 2013
-                  .col-xs-12
-                    p What a great place. I can't say enough good things about it.
-              .row
-                .review
-                  .well.well-sm.review-header
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star-empty
-                    span.glyphicon.glyphicon-star-empty
-                    &nbsp;
-                    span Simon Holmes
-                      &nbsp;
-                      small 16 July 2013
-                  .col-xs-12
-                    p What a great place. I can't say enough good things about it.
+                      span= review.name
+                        &nbsp;
+                        small= review.date
+                    .col-xs-12
+                      p= review.content
 
 
     .col-xs-12.col-md-4
-      p.lead Simon's cafe is on Loc8r because it has accesible wifi and space to sit down with your laptop and get some work done.
-      p If you've been and you like it - or if you don't - please leave a review to help other people just like you.
+      p.lead #{location.name} #{sidebar.context}
+      p #{sidebar.cta}
