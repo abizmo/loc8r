@@ -29,7 +29,7 @@ module.exports.show = function (req, res, next) {
               address: '125 High Street, Reading, RG6 1PS',
               coords: { lat: 51.455041, lon: -0.9690884 },
               facilities: [ 'Hot drinks', 'Food', 'Wifi Premium'],
-              hours: [{
+              openingHours: [{
                 days: 'Monday - Friday',
                 opening: '7:00am',
                 closing: '7:00pm',
@@ -46,18 +46,18 @@ module.exports.show = function (req, res, next) {
               reviews: [{
                 rating: 3,
                 author: 'Simon Holmes',
-                date: '16 July 2013',
-                content: "What a great place. I can't say enough good things about it."
+                createOn: '16 July 2013',
+                reviewText: "What a great place. I can't say enough good things about it."
                 }, {
                 rating: 2,
                 author: 'Simon Holmes',
-                date: '16 July 2015',
-                content: "What a great place. I can't say enough good things about it."
+                createOn: '16 July 2015',
+                reviewText: "What a great place. I can't say enough good things about it."
                 }, {
                 rating: 4,
                 author: 'Simon Holmes',
-                date: '16 July 2017',
-                content: "What a great place. I can't say enough good things about it." }]};
+                createOn: '16 July 2017',
+                reviewText: "What a great place. I can't say enough good things about it." }]};
 
   res.render('locationShow', { title: 'Loc8r - ' + location.name,
                                 location: location,
