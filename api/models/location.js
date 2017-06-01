@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
-const openingDaySchema = new mongoose.Schema({
+var openingDaySchema = new mongoose.Schema({
   days: { type: String,
           required: true },
   opening: String,
@@ -9,7 +9,7 @@ const openingDaySchema = new mongoose.Schema({
             required: true}
 });
 
-const reviewSchema = new mongoose.Schema({
+var reviewSchema = new mongoose.Schema({
   rating: { type: Number,
             "default": 0,
             min: 0,
@@ -21,7 +21,7 @@ const reviewSchema = new mongoose.Schema({
   reviewText: String
 });
 
-const locationSchema = new mongoose.Schema({
+var locationSchema = new mongoose.Schema({
   name: { type: String,
           required: true },
   rating: { type: Number,
@@ -35,7 +35,7 @@ const locationSchema = new mongoose.Schema({
   reviews: [reviewSchema]
 });
 
-const Location = mongoose.model('Location', locationSchema);
+mongoose.model('Location', locationSchema);
 
 
 
