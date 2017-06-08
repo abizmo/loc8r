@@ -1,25 +1,60 @@
-module.exports.index = function (req, res, next) {
-  locations = [{ name: 'Starcups',
-                rating: 3,
-                distance: '50m',
-                address: '125 High Street, Reading, RG6 1PS',
-                facilities: [ 'Hot drinks', 'Food', 'Wifi Premium'] },
-              { name: 'Starcups',
-                rating: 1,
-                distance: '100m',
-                address: '125 High Street, Reading, RG6 1PS',
-                facilities: [ 'Hot drinks', 'Food', 'Wifi Premium'] },
-              { name: 'Starcups',
-                rating: 5,
-                distance: '300m',
-                address: '125 High Street, Reading, RG6 1PS',
-                facilities: [ 'Hot drinks', 'Food', 'Wifi Premium'] }];
+var request = require('request');
+var apiOptions = {
+  server : "http://localhost:3000"
+};
+if (process.env.NODE_ENV === 'production') {
+  apiOptions.server = "https://floating-atoll-44743.herokuapp.com";
+}
 
+function renderHomePage(req, res, locations) {
+  var message;
+
+  if (!(locations instanceof Array)) {
+    locations = [];
+    message = "Api lookup error!";
+  } else if (!locations.length) {
+    message = "No locations found nearby!";
+  }
   res.render('locationIndex', { title: 'Loc8r - Locations',
                                 pageHeader: { title: 'Loc8r',
                                                 small: 'Find places to work with wifi near to you!' },
                                 locations: locations,
-                                sidebar: "Looking for wifi and seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for." });
+                                sidebar: "Looking for wifi and seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
+                                message: message });
+};
+
+function displayDistance(distance) {
+  if (distance > 1) {
+    return parseInt(distance) + " Km";
+  } else {
+    return parseInt(distance * 1000) + " m";
+  }
+};
+
+module.exports.index = function (req, res, next) {
+  var requestOptions, path;
+  path = "/api/locations";
+  requestOptions = {
+    url: apiOptions.server + path,
+    method: "GET",
+    json: {},
+    qs: {
+      lng: -15.489367,
+      lat: 28.091628,
+      maxDistance: 20
+    }
+  };
+
+  request(requestOptions, function (err, response, body) {
+    if (response.statusCode === 200 && body.length) {
+      var data, i;
+      data = body;
+      for (var i = 0; i < data.length; i++) {
+        data[i].distance = displayDistance(data[i].distance);
+      }
+    }
+    renderHomePage(req, res, data);
+  });
 };
 
 module.exports.show = function (req, res, next) {

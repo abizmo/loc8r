@@ -22,7 +22,7 @@ module.exports.index = function (req, res) {
   var lat = parseFloat(req.query.lat);
   var maxDistance = parseFloat(req.query.maxDistance) || 20000;
 
-  if (!lng || !lat) {
+  if ((!lng && lng !== 0) || !lat && lat !== 0) {
     shared.sendResponse(res, 400, { message: "The longitude and latitude query parameters are required" });
     return;
   }
@@ -43,8 +43,6 @@ module.exports.index = function (req, res) {
       return;
     }
     var locations;
-    console.log(results);
-    console.log(stats);
     locations = buildLocationsList(results, stats);
     shared.sendResponse(res, 200, locations);
   });
