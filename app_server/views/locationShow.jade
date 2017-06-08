@@ -40,12 +40,12 @@ block content
             .panel-heading
               h4 Location Map
             .panel-body
-              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lon}&zoom=17&size=400x350&sensor=false&markers=#{location.coords.lat},#{location.coords.lon}')
+              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lng}&zoom=17&size=400x350&sensor=false&markers=#{location.coords.lat},#{location.coords.lng}')
       .row
         .col-xs-12.col-md-12
           .panel.panel-primary
             .panel-heading
-              a.btn.btn-default.pull-right(href='/location/review/new') Add Review
+              a.btn.btn-default.pull-right(href='/locations/#{location._id}/reviews/new') Add Review
               h4 Customer reviews
             .panel-body.review-container
               each review in location.reviews
@@ -56,7 +56,7 @@ block content
                       &nbsp;
                       span= review.name
                         &nbsp;
-                        small= review.createOn
+                        +format_date(review.createOn)
                     .col-xs-12
                       p= review.reviewText
 

@@ -5,8 +5,8 @@ var others = require('../controllers/others');
 
 // Locations URL
 router.get('/', locations.index);
-router.get('/location/', locations.show);
-router.get('/location/review/new', locations.addReview);
+router.get('/locations/:locationId', locations.show);
+router.get('/locations/:locationId/reviews/new', locations.addReview);
 
 // Others URL
 router.get('/about/', others.about);

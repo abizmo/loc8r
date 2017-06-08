@@ -23,6 +23,31 @@ function renderHomePage(req, res, locations) {
                                 message: message });
 };
 
+function renderShowPage(req, res, location) {
+  res.render('locationShow', { title: 'Loc8r - ' + location.name,
+                                location: location,
+                                sidebar: {
+                                  context: "is on Loc8r because it has accesible wifi and space to sit down with your laptop and get some work done.",
+                                  cta: "If you've been and you like it - or if you don't - please leave a review to help other people just like you."
+                                }});
+};
+
+function _showError(req, res, status) {
+  var title, content;
+  if (status === 404) {
+    title = "Page not found!";
+    content = "You seem lost...";
+  } else {
+    title = "Something's gone wrong!";
+    content = "Something, somewhere, has gone just a little bit wrong.";
+  }
+  res.render('error', {
+    title: title,
+    content: content,
+    status: status
+  });
+}
+
 function displayDistance(distance) {
   if (distance > 1) {
     return parseInt(distance) + " Km";
@@ -58,48 +83,28 @@ module.exports.index = function (req, res, next) {
 };
 
 module.exports.show = function (req, res, next) {
-  location = { name: 'Starcups',
-              rating: 3,
-              distance: '50m',
-              address: '125 High Street, Reading, RG6 1PS',
-              coords: { lat: 51.455041, lon: -0.9690884 },
-              facilities: [ 'Hot drinks', 'Food', 'Wifi Premium'],
-              openingHours: [{
-                days: 'Monday - Friday',
-                opening: '7:00am',
-                closing: '7:00pm',
-                closed: false
-              }, {
-                days: 'Saturday',
-                opening: '8:00am',
-                closing: '5:00pm',
-                closed: false
-              }, {
-                days: 'Sunday',
-                closed: true
-              }],
-              reviews: [{
-                rating: 3,
-                author: 'Simon Holmes',
-                createOn: '16 July 2013',
-                reviewText: "What a great place. I can't say enough good things about it."
-                }, {
-                rating: 2,
-                author: 'Simon Holmes',
-                createOn: '16 July 2015',
-                reviewText: "What a great place. I can't say enough good things about it."
-                }, {
-                rating: 4,
-                author: 'Simon Holmes',
-                createOn: '16 July 2017',
-                reviewText: "What a great place. I can't say enough good things about it." }]};
+  var requestOptions, path;
+  path = "/api/locations/" + req.params.locationId;
+  requestOptions = {
+    url: apiOptions.server + path,
+    method: "GET",
+    json: {},
+    qs: {}
+  };
 
-  res.render('locationShow', { title: 'Loc8r - ' + location.name,
-                                location: location,
-                                sidebar: {
-                                  context: "is on Loc8r because it has accesible wifi and space to sit down with your laptop and get some work done.",
-                                  cta: "If you've been and you like it - or if you don't - please leave a review to help other people just like you."
-                                }});
+  request(requestOptions, function (err, response, body) {
+    if (response.statusCode === 200) {
+      var data;
+      data = body;
+      data.coords = {
+        lng: body.coords[0],
+        lat: body.coords[1]
+      };
+      renderShowPage(req, res, body);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  });
 };
 
 module.exports.addReview = function (req, res, next) {
