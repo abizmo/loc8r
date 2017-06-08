@@ -7,6 +7,7 @@ var others = require('../controllers/others');
 router.get('/', locations.index);
 router.get('/locations/:locationId', locations.show);
 router.get('/locations/:locationId/reviews/new', locations.addReview);
+router.post('/locations/:locationId/reviews/new', locations.createReview);
 
 // Others URL
 router.get('/about/', others.about);
