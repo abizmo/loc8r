@@ -48,13 +48,22 @@ var _showError = function (req, res, status) {
   });
 };
 
-var renderAddReviewPage = function (req, res, location) {
-  res.render('locationAddReview', {
-    title: 'Loc8r - Add Review',
-    pageHeader: { title: location.name + ': add a new review' },
-    location: location,
-    error: req.query.err
-  });
+var renderAddItemPage = function (req, res, item, location) {
+  if (item === 'review') {
+    res.render('locationAddReview', {
+      title: 'Loc8r - Add Review',
+      pageHeader: { title: location.name + ': add a new review' },
+      location: location,
+      error: req.query.err
+    });
+  } else {
+    res.render('locationAddTime', {
+      title: 'Loc8r - Add Time',
+      pageHeader: { title: location.name + ': add a new time' },
+      location: location,
+      error: req.query.err
+    });
+  }
 };
 
 var displayDistance = function (distance) {
@@ -124,7 +133,7 @@ module.exports.show = function (req, res, next) {
 
 module.exports.addReview = function (req, res, next) {
   getLocationInfo(req, res, function (req, res, responseData) {
-    renderAddReviewPage(req, res, responseData);
+    renderAddItemPage(req, res, 'review', responseData);
   });
 };
 
@@ -153,6 +162,46 @@ module.exports.createReview = function (req, res, next) {
       } else if (status === 400 && body.name && body.name === "ValidationError") {
         res.redirect('/locations/' + locationId + '/reviews/new?err=val');
       } else {
+        _showError(req, res, status);
+      }
+    });
+  }
+};
+
+module.exports.addTime = function (req, res, next) {
+  getLocationInfo(req, res, function (err, response, responseData) {
+    renderAddItemPage(req, res, 'time', responseData);
+  });
+};
+
+module.exports.createTime = function (req, res, next) {
+  var requestOptions, path, postdata, locationId, closed;
+  locationId = req.params.locationId;
+  path = '/api/locations/' + locationId + '/times';
+  closed = (req.body.closed && req.body.closed === 'on') ? true : false;
+  postdata = {
+    days: req.body.days,
+    opening: req.body.opening,
+    closing: req.body.closing,
+    closed: closed
+  };
+
+  if (!postdata.days || (!postdata.closed && (!postdata.opening || !postdata.closing))) {
+    res.redirect('/locations/' + locationId + '/times/new?err=val');
+  } else {
+    requestOptions = {
+      url: apiOptions.server + path,
+      method: "POST",
+      json: postdata,
+      qs: {}
+    };
+    request(requestOptions, function (err, response, body) {
+      var status = response.statusCode;
+      if (status === 201) {
+        res.redirect('/locations/' + locationId);
+      } else if (status === 400 && body.name && body.name === "ValidationError") {
+        res.redirect('/locations/' + locationId + '/times/new?err=val');
+      }else {
         _showError(req, res, status);
       }
     });

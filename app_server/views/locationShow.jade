@@ -17,6 +17,7 @@ block content
 
           .panel.panel-primary
             .panel-heading
+              a.btn.btn-default.pull-right(href='/locations/#{location._id}/times/new') Add Hour
               h4 Opening Hours
             .panel-body
               each hour in location.openingHours

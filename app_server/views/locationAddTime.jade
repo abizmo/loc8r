@@ -1,0 +1,33 @@
+extend layout
+
+block content
+  .page-header
+    .row
+      .col-lg-6
+        h1= pageHeader.title
+
+  .row
+    .col-xs-12.col-md-12
+      form#addTime.form-horizontal(action='', method='post', role='form')
+        - if (error == "val")
+          .alert.alert-danger(role='alert') Days field is required! Does it have hours? or is it closed?, please try again.
+        .form-group
+          label.col-xs-10.col-sm-2.control-label(for='days') Days
+          .col-xs-12.col-sm-10
+            input#days.form-control(name='days')
+        .form-group
+          label.col-xs-10.col-sm-2.control-label(for='opening') Opening
+          .col-xs-12.col-sm-10
+            input#opening.form-control(type='time',name='opening')
+        .form-group
+          label.col-xs-10.col-sm-2.control-label(for='closing') Closing
+          .col-xs-12.col-sm-10
+            input#closing.form-control(type='time',name='closing')
+        .form-group
+          .col-sm-offset-2.col-sm-10.col-xs-12
+            .checkbox
+              label(for='closed')
+                input#closed(type='checkbox',name='closed')
+                | Closed?
+
+        button.btn.btn-default.pull-right.col-xs-12.col-sm-2(type='submit') Add time
