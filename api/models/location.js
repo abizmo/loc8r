@@ -11,14 +11,15 @@ var openingDaySchema = new mongoose.Schema({
 
 var reviewSchema = new mongoose.Schema({
   rating: { type: Number,
-            "default": 0,
+            required: true,
             min: 0,
             max: 5 },
   author: { type: String,
             required: true },
   createOn: { type: Date,
           "default": Date.now},
-  reviewText: String
+  reviewText: { type: String,
+                required: true }
 });
 
 var locationSchema = new mongoose.Schema({
@@ -36,10 +37,3 @@ var locationSchema = new mongoose.Schema({
 });
 
 mongoose.model('Location', locationSchema);
-
-
-
-// rating: 3,
-// author: 'Simon Holmes',
-// date: '16 July 2013',
-// content: "What a great place. I can't say enough good things about it."

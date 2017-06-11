@@ -52,7 +52,8 @@ var renderAddReviewPage = function (req, res, location) {
   res.render('locationAddReview', {
     title: 'Loc8r - Add Review',
     pageHeader: { title: location.name + ': add a new review' },
-    location: location
+    location: location,
+    error: req.query.err
   });
 };
 
@@ -136,20 +137,24 @@ module.exports.createReview = function (req, res, next) {
     rating: req.body.rating,
     reviewText: req.body.review
   };
-  requestOptions = {
-    url: apiOptions.server + path,
-    method: 'POST',
-    json: postdata,
-    qs: {}
-  };
-  console.log(requestOptions);
-  request(requestOptions, function (err, response, body) {
-    var status = response.statusCode;
-    if (status === 201) {
-      res.redirect('/locations/' + locationId)
-    } else {
-      _showError(req, res, status);
-    }
-  });
-
+  if (!postdata.author || !postdata.rating || !postdata.reviewText) {
+    res.redirect('/locations/' + locationId + '/reviews/new?err=val');
+  } else {
+    requestOptions = {
+      url: apiOptions.server + path,
+      method: 'POST',
+      json: postdata,
+      qs: {}
+    };
+    request(requestOptions, function (err, response, body) {
+      var status = response.statusCode;
+      if (status === 201) {
+        res.redirect('/locations/' + locationId);
+      } else if (status === 400 && body.name && body.name === "ValidationError") {
+        res.redirect('/locations/' + locationId + '/reviews/new?err=val');
+      } else {
+        _showError(req, res, status);
+      }
+    });
+  }
 };
