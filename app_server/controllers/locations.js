@@ -6,21 +6,27 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://floating-atoll-44743.herokuapp.com";
 }
 
-var renderHomePage = function (req, res, locations) {
-  var message;
-
-  if (!(locations instanceof Array)) {
-    locations = [];
-    message = "Api lookup error!";
-  } else if (!locations.length) {
-    message = "No locations found nearby!";
-  }
+var renderHomePage = function (req, res) {
+  // var renderHomePage = function (req, res, locations) {
+  // var message;
+  //
+  // if (!(locations instanceof Array)) {
+  //   locations = [];
+  //   message = "Api lookup error!";
+  // } else if (!locations.length) {
+  //   message = "No locations found nearby!";
+  // }
+  // res.render('locationIndex', { title: 'Loc8r - Locations',
+  //                               pageHeader: { title: 'Loc8r',
+  //                                               small: 'Find places to work with wifi near to you!' },
+  //                               locations: locations,
+  //                               sidebar: "Looking for wifi and seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
+  //                               message: message });
+  console.log('1');
   res.render('locationIndex', { title: 'Loc8r - Locations',
                                 pageHeader: { title: 'Loc8r',
                                                 small: 'Find places to work with wifi near to you!' },
-                                locations: locations,
-                                sidebar: "Looking for wifi and seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
-                                message: message });
+                                sidebar: "Looking for wifi and seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for." });
 };
 
 var renderShowPage = function (req, res, location) {
@@ -100,29 +106,30 @@ var getLocationInfo = function (req, res, cb) {
 };
 
 module.exports.index = function (req, res, next) {
-  var requestOptions, path;
-  path = "/api/locations";
-  requestOptions = {
-    url: apiOptions.server + path,
-    method: "GET",
-    json: {},
-    qs: {
-      lng: -15.489367,
-      lat: 28.091628,
-      maxDistance: 20
-    }
-  };
-
-  request(requestOptions, function (err, response, body) {
-    if (response.statusCode === 200 && body.length) {
-      var data, i;
-      data = body;
-      for (var i = 0; i < data.length; i++) {
-        data[i].distance = displayDistance(data[i].distance);
-      }
-    }
-    renderHomePage(req, res, data);
-  });
+  // var requestOptions, path;
+  // path = "/api/locations";
+  // requestOptions = {
+  //   url: apiOptions.server + path,
+  //   method: "GET",
+  //   json: {},
+  //   qs: {
+  //     lng: -15.489367,
+  //     lat: 28.091628,
+  //     maxDistance: 20
+  //   }
+  // };
+  //
+  // request(requestOptions, function (err, response, body) {
+  //   if (response.statusCode === 200 && body.length) {
+  //     var data, i;
+  //     data = body;
+  //     for (var i = 0; i < data.length; i++) {
+  //       data[i].distance = displayDistance(data[i].distance);
+  //     }
+  //   }
+  //   renderHomePage(req, res, data);
+  // });
+  renderHomePage(req, res);
 };
 
 module.exports.show = function (req, res, next) {
