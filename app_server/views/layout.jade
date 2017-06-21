@@ -6,7 +6,7 @@ html
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+  body(ng-app='loc8rApp')
     .navbar.navbar-default.navbar-fixed-top
       .container
         .navbar-header
@@ -31,3 +31,5 @@ html
       script(src='/javascripts/jquery-3.2.1.min.js')
       script(src='/bootstrap/js/bootstrap.min.js')
       script(src='/javascripts/validation.js')
+      script(src='/angular/angular.min.js')
+      script(src='/angular/loc8rApp.js')
