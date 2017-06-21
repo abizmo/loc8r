@@ -1,5 +1,4 @@
 var locationListCtrl = function ($scope) {
-  console.log(2);
   $scope.data = {
     locations: [{
       name: 'Burger Queen',
@@ -18,6 +17,27 @@ var locationListCtrl = function ($scope) {
   };
 };
 
+var formatDistance = function () {
+  return function (distance) {
+    if (distance > 1) {
+      return parseInt(distance) + " Km";
+    } else {
+      return parseInt(distance * 1000) + " m";
+    }
+  };
+};
+
+var ratingStars = function () {
+  return {
+    scope: {
+      thisRating: '=rating'
+    },
+    templateUrl: "angular/ratingStars.html"
+  };
+};
+
 angular
   .module('loc8rApp', [])
-  .controller('locationListCtrl', locationListCtrl);
+  .controller('locationListCtrl', locationListCtrl)
+  .filter('formatDistance', formatDistance)
+  .directive('ratingStars', ratingStars);

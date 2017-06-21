@@ -12,12 +12,14 @@ block content
   .row(ng-controller="locationListCtrl")
     .col-xs-12.col-md-8
       .error {{message}}
+      label(for="filter") Filter Results
+      input#filter(type="text", name="filter", ng-model="textFilter")
       ul.list-group
-        li.list-group-item(ng-repeat="location in data.locations")
+        li.list-group-item(ng-repeat="location in data.locations | filter: textFilter")
           h4
             a(href="/locations/{{location._id}}") {{location.name}}
-            small {{location.rating}}
-            span.badge.pull-right.badge-default {{location.distance}}
+            small(rating-stars, rating="location.rating")
+            span.badge.pull-right.badge-default {{location.distance | formatDistance }}
           p {{location.address}}
           span.label.label-warning(ng-repeat="facility in location.facilities")
             | {{facility}}

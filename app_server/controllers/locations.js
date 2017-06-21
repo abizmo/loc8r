@@ -22,7 +22,6 @@ var renderHomePage = function (req, res) {
   //                               locations: locations,
   //                               sidebar: "Looking for wifi and seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
   //                               message: message });
-  console.log('1');
   res.render('locationIndex', { title: 'Loc8r - Locations',
                                 pageHeader: { title: 'Loc8r',
                                                 small: 'Find places to work with wifi near to you!' },
