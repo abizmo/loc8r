@@ -59,7 +59,8 @@ var renderAddItemPage = function (req, res, item, location) {
       title: 'Loc8r - Add Review',
       pageHeader: { title: location.name + ': add a new review' },
       location: location,
-      error: req.query.err
+      error: req.query.err,
+      url: req.originalUrl
     });
   } else {
     res.render('locationAddTime', {
