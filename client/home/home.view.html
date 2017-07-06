@@ -17,7 +17,7 @@
         <h4>
           <a href="/locations/{{ location._id }}">{{ location.name }}</a>
           <small class="rating-stars" rating-stars rating="location.rating"></small>
-          <span class="badge pull-right badge-default">{{ location.distance }}</span>
+          <span class="badge pull-right badge-default">{{ location.distance | formatDistance }}</span>
         </h4>
         <p>{{ location.address }}</p>
         <span class="label label-warning" ng-repeat="facility in location.facilities"> {{ facility }}</span>
