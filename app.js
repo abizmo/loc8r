@@ -4,7 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var db = require('./api/models/db.js')
+var db = require('./api/models/db.js');
+const uglify = require('uglify-js');
+const fs = require('fs');
 
 var routes = require('./app_server/routes/index');
 var routesApi = require('./api/routes/index');
@@ -14,6 +16,27 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server','views'));
 app.set('view engine', 'jade');
+
+// minifying JS
+
+var appClientFiles = [
+  'client/app.js',
+  'client/home/home.controller.js',
+  'client/common/services/loc8rData.service.js',
+  'client/common/services/geolocation.service.js',
+  'client/common/filters/formatDistance.filter.js',
+  'client/common/directives/ratingStars/ratingStars.directive.js'
+];
+
+var uglified = uglify.minify(appClientFiles, { compress: false });
+console.log(uglified);
+fs.writeFile('public/angular/loc8r.min.js', uglified.code, function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Minify successful!');
+  }
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
