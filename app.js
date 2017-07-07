@@ -4,7 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var db = require('./api/models/db.js')
+var db = require('./api/models/db.js');
+const uglify = require('uglify-js');
+const fs = require('fs');
 
 var routes = require('./app_server/routes/index');
 var routesApi = require('./api/routes/index');
@@ -14,6 +16,26 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server','views'));
 app.set('view engine', 'jade');
+
+// minifying js
+var appClientFiles = {
+  "client/app.js": fs.readFileSync("client/app.js", "utf8"),
+  "client/home/home.controller.js": fs.readFileSync("client/home/home.controller.js", "utf8"),
+  "client/common/services/loc8rData.service.js": fs.readFileSync("client/common/services/loc8rData.service.js", "utf8"),
+  "client/common/services/geolocation.service.js": fs.readFileSync("client/common/services/geolocation.service.js", "utf8"),
+  "client/common/filters/formatDistance.filter.js": fs.readFileSync("client/common/filters/formatDistance.filter.js", "utf8"),
+  "client/common/directives/ratingStars/ratingStars.directive.js": fs.readFileSync("client/common/directives/ratingStars/ratingStars.directive.js", "utf8")
+};
+
+var uglified = uglify.minify(appClientFiles, { compress: false });
+console.log(uglified);
+fs.writeFile('public/angular/loc8r.min.js', uglified.code, function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Minify succesfull!');
+  }
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
