@@ -8,7 +8,7 @@ var db = require('./api/models/db.js');
 const uglify = require('uglify-js');
 const fs = require('fs');
 
-var routes = require('./app_server/routes/index');
+// var routes = require('./app_server/routes/index');
 var routesApi = require('./api/routes/index');
 
 var app = express();
@@ -28,7 +28,7 @@ var appClientFiles = {
 };
 
 var uglified = uglify.minify(appClientFiles, { compress: false });
-console.log(uglified);
+
 fs.writeFile('public/angular/loc8r.min.js', uglified.code, function (err) {
   if (err) {
     console.log(err);
@@ -46,8 +46,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client')));
 
-app.use('/', routes);
+// app.use('/', routes);
 app.use('/api', routesApi);
+
+app.use(function (req, res) {
+  res.sendFile(path.join(__dirname, 'client', 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
