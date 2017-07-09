@@ -1,30 +1,29 @@
-<div class="page-header">
+<header-component></header-component>
+
+<div class="container">
+  <page-header content="vm.pageHeader"></page-header>
+
   <div class="row">
-    <div class="col-lg-6">
-      <h1>{{ vm.pageHeader.title }} &nbsp;
-        <small>{{ vm.pageHeader.small }}</small>
-      </h1>
+    <div class="col-xs-12 col-md-8">
+      <div class="error">{{ vm.message }}</div>
+      <label for="filter"> Filter Results</label>
+      <input type="text" name="filter" ng-model="textFilter" id="filter">
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="location in vm.data.locations | filter: textFilter">
+          <h4>
+            <a href="#/locations/{{ location._id }}">{{ location.name }}</a>
+            <small class="rating-stars" rating-stars rating="location.rating"></small>
+            <span class="badge pull-right badge-default">{{ location.distance | formatDistance }}</span>
+          </h4>
+          <p>{{ location.address }}</p>
+          <span class="label label-warning" ng-repeat="facility in location.facilities"> {{ facility }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <p class="lead">{{ vm.sidebar.content }}</p>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-md-8">
-    <div class="error">{{ vm.message }}</div>
-    <label for="filter"> Filter Results</label>
-    <input type="text" name="filter" ng-model="textFilter" id="filter">
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="location in vm.data.locations | filter: textFilter">
-        <h4>
-          <a href="/locations/{{ location._id }}">{{ location.name }}</a>
-          <small class="rating-stars" rating-stars rating="location.rating"></small>
-          <span class="badge pull-right badge-default">{{ location.distance | formatDistance }}</span>
-        </h4>
-        <p>{{ location.address }}</p>
-        <span class="label label-warning" ng-repeat="facility in location.facilities"> {{ facility }}</span>
-      </li>
-    </ul>
-  </div>
-  <div class="col-xs-12 col-md-4">
-    <p class="lead">{{ vm.sidebar.content }}</p>
-  </div>
+
+  <footer-component></footer-component>
 </div>

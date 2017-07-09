@@ -24,7 +24,10 @@ var appClientFiles = {
   "client/common/services/loc8rData.service.js": fs.readFileSync("client/common/services/loc8rData.service.js", "utf8"),
   "client/common/services/geolocation.service.js": fs.readFileSync("client/common/services/geolocation.service.js", "utf8"),
   "client/common/filters/formatDistance.filter.js": fs.readFileSync("client/common/filters/formatDistance.filter.js", "utf8"),
-  "client/common/directives/ratingStars/ratingStars.directive.js": fs.readFileSync("client/common/directives/ratingStars/ratingStars.directive.js", "utf8")
+  "client/common/directives/ratingStars/ratingStars.directive.js": fs.readFileSync("client/common/directives/ratingStars/ratingStars.directive.js", "utf8"),
+  "client/common/directives/footerComponent/footerComponent.directive.js": fs.readFileSync("client/common/directives/footerComponent/footerComponent.directive.js", "utf8"),
+  "client/common/directives/headerComponent/headerComponent.directive.js": fs.readFileSync("client/common/directives/headerComponent/headerComponent.directive.js", "utf8"),
+  "client/common/directives/pageHeader/pageHeader.directive.js": fs.readFileSync("client/common/directives/pageHeader/pageHeader.directive.js", "utf8")
 };
 
 var uglified = uglify.minify(appClientFiles, { compress: false });
