@@ -21,6 +21,7 @@ app.set('view engine', 'jade');
 var appClientFiles = {
   "client/app.js": fs.readFileSync("client/app.js", "utf8"),
   "client/home/home.controller.js": fs.readFileSync("client/home/home.controller.js", "utf8"),
+  "client/locationDetail/locationDetail.controller.js": fs.readFileSync("client/locationDetail/locationDetail.controller.js", "utf8"),
   "client/common/services/loc8rData.service.js": fs.readFileSync("client/common/services/loc8rData.service.js", "utf8"),
   "client/common/services/geolocation.service.js": fs.readFileSync("client/common/services/geolocation.service.js", "utf8"),
   "client/common/filters/formatDistance.filter.js": fs.readFileSync("client/common/filters/formatDistance.filter.js", "utf8"),

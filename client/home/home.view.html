@@ -11,7 +11,7 @@
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="location in vm.data.locations | filter: textFilter">
           <h4>
-            <a href="#/locations/{{ location._id }}">{{ location.name }}</a>
+            <a href="locations/{{ location._id }}">{{ location.name }}</a>
             <small class="rating-stars" rating-stars rating="location.rating"></small>
             <span class="badge pull-right badge-default">{{ location.distance | formatDistance }}</span>
           </h4>
