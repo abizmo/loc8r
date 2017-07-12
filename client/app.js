@@ -1,6 +1,6 @@
 (function () {
   angular
-    .module('loc8rApp', ['ngRoute']);
+    .module('loc8rApp', ['ngRoute','ngSanitize']);
 
   function config($routeProvider, $locationProvider) {
     $routeProvider
