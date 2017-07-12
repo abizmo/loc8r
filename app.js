@@ -28,7 +28,8 @@ var appClientFiles = {
   "client/common/directives/footerComponent/footerComponent.directive.js": fs.readFileSync("client/common/directives/footerComponent/footerComponent.directive.js", "utf8"),
   "client/common/directives/headerComponent/headerComponent.directive.js": fs.readFileSync("client/common/directives/headerComponent/headerComponent.directive.js", "utf8"),
   "client/common/directives/pageHeader/pageHeader.directive.js": fs.readFileSync("client/common/directives/pageHeader/pageHeader.directive.js", "utf8"),
-  "client/about/about.controller.js": fs.readFileSync("client/about/about.controller.js", "utf8")
+  "client/about/about.controller.js": fs.readFileSync("client/about/about.controller.js", "utf8"),
+  "client/common/filters/addHtmlLineBreaks.filter.js": fs.readFileSync("client/common/filters/addHtmlLineBreaks.filter.js", "utf8")
 };
 
 var uglified = uglify.minify(appClientFiles, { compress: false });

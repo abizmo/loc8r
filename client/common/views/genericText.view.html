@@ -3,7 +3,7 @@
   <page-header content="vm.pageHeader"></page-header>
   <div class="row">
     <div class="col-xs-12 col-md-12">
-      <p>{{vm.content}}</p>
+      <p>{{ vm.content | addHtmlLineBreaks }}</p>
     </div>
   </div>
   <footer-component></footer-component>
