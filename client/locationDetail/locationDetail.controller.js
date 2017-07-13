@@ -1,13 +1,14 @@
 (function () {
   angular
     .module('loc8rApp')
-    .controller('locationDetailCtrl', locationDetailCtrl);
+    .controller('locationDetailCtrl', ['$routeParams', locationDetailCtrl]);
 
-  function locationDetailCtrl() {
+  function locationDetailCtrl($routeParams) {
     var vm = this;
+    var locationId = $routeParams.locationId;
 
     vm.pageHeader = {
-      title: "Location Detail xD"
+      title: locationId
     };
   };
 })();

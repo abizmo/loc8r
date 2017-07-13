@@ -9,7 +9,7 @@
         controller: 'homeCtrl',
         controllerAs: 'vm'
       })
-      .when('/locations/:id', {
+      .when('/locations/:locationId', {
         templateUrl: 'locationDetail/locationDetail.view.html',
         controller: 'locationDetailCtrl',
         controllerAs: 'vm'

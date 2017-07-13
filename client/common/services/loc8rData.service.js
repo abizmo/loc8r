@@ -7,8 +7,14 @@
     var locationByCoords = function (lng, lat) {
       return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=20000');
     };
+
+    var locationById = function (locationId) {
+      return $http.get('/api/locations/' + locationId);
+    };
+    
     return {
-      locationByCoords : locationByCoords
+      locationByCoords : locationByCoords,
+      locationById: locationById
     };
   };
 })();
