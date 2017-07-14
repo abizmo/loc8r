@@ -1,6 +1,77 @@
 <header-component></header-component>
 <div class="container">
   <page-header content="vm.pageHeader"></page-header>
-  <div class="row"></div>
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <p class="rating-stars" rating-stars rating="vm.location.rating"></p>
+          <p>{{ vm.location.address }}</p>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <a href="locations/{{vm.location._id}}/times/new" class="btn btn-default pull-right">Add Hour</a>
+              <h4>Opening Hours</h4>
+            </div>
+            <div class="panel-body">
+              <p ng-repeat='hour in vm.location.openingHours' ng-switch on="hour.closed">{{ hour.days }}
+                <span ng-switch-when="true">closed</span>
+                <span ng-switch-default>{{ hour.opening }} - {{ hour.closing }}</span>
+              </p>
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4>Facilities</h4>
+            </div>
+            <div class="panel-body">
+              <span class="label label-warning" ng-repeat="facility in vm.location.facilities">
+                <span class="glyphicon glyphicon-ok">
+                  &nbsp;{{ facility }}
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6 pull-right">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4>Location Map</h4>
+            </div>
+            <div class="panel-body">
+              <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ vm.location.coords[1] }},{{ vm.location.coords[0] }}&amp;zoom=17&amp;size=400x350&amp;sensor=false&amp;markers={{ vm.location.coords[1] }},{{ vm.location.coords[0] }}" alt="" class="img-responsive img-rounded">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs12 col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <a href="locations/{{ vm.location._id }}/reviews/new" class="btn btn-default pull-right">Add Review</a>
+              <h4>Customer reviews</h4>
+            </div>
+          </div>
+          <div class="panel-body review-container">
+            <div class="row" ng-repeat="review in vm.location.reviews | orderBy: '-createOn'">
+              <div class="review">
+                <div class="well well-sm review-header">
+                  <span class="rating-stars" rating-stars rating="review.rating"></span>
+                  <span>{{ review.author }}</span>
+                  <small class="reviewTimestamp">{{ review.createOn | date: 'dd MMMM yyyy HH:mm' }}</small>
+                </div>
+                <div class="col-xs-12">
+                  <p>{{ review.reviewText }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <p class="lead">{{ vm.location.name }} is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.</p>
+      <p>If you've been and you like it - or if you don't - please leave a review to help other people just like you.</p>
+    </div>
+  </div>
   <footer-component></footer-component>
 </div>
