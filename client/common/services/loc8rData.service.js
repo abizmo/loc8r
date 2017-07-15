@@ -11,10 +11,15 @@
     var locationById = function (locationId) {
       return $http.get('/api/locations/' + locationId);
     };
-    
+
+    var addReviewById = function (locationId, reviewData) {
+      return $http.post('/api/locations/' + locationId + '/reviews', reviewData);
+    };
+
     return {
       locationByCoords : locationByCoords,
-      locationById: locationById
+      locationById: locationById,
+      addReviewById: addReviewById
     };
   };
 })();
