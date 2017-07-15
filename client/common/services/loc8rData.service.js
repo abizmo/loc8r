@@ -16,10 +16,15 @@
       return $http.post('/api/locations/' + locationId + '/reviews', reviewData);
     };
 
+    var addTimeById = function (locationId, timeData) {
+      return $http.post('/api/locations/' + locationId + '/times', timeData);
+    };
+
     return {
       locationByCoords : locationByCoords,
       locationById: locationById,
-      addReviewById: addReviewById
+      addReviewById: addReviewById,
+      addTimeById: addTimeById
     };
   };
 })();

@@ -23,6 +23,7 @@ var appClientFiles = {
   "client/home/home.controller.js": fs.readFileSync("client/home/home.controller.js", "utf8"),
   "client/locationDetail/locationDetail.controller.js": fs.readFileSync("client/locationDetail/locationDetail.controller.js", "utf8"),
   "client/reviewModal/reviewModal.controller.js": fs.readFileSync("client/reviewModal/reviewModal.controller.js", "utf8"),
+  "client/timeModal/timeModal.controller.js": fs.readFileSync("client/timeModal/timeModal.controller.js", "utf8"),
   "client/common/services/loc8rData.service.js": fs.readFileSync("client/common/services/loc8rData.service.js", "utf8"),
   "client/common/services/geolocation.service.js": fs.readFileSync("client/common/services/geolocation.service.js", "utf8"),
   "client/common/filters/formatDistance.filter.js": fs.readFileSync("client/common/filters/formatDistance.filter.js", "utf8"),

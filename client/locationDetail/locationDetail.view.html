@@ -9,7 +9,7 @@
           <p>{{ vm.location.address }}</p>
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <a href="locations/{{vm.location._id}}/times/new" class="btn btn-default pull-right">Add Hour</a>
+              <a ng-click="vm.popupTimeForm()" class="btn btn-default pull-right">Add Hour</a>
               <h4>Opening Hours</h4>
             </div>
             <div class="panel-body">

@@ -37,5 +37,25 @@
         vm.location.reviews.push(result);
       });
     };
+
+    vm.popupTimeForm = function () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'timeModal/timeModal.view.html',
+        controller: 'timeModalCtrl',
+        controllerAs: 'vm',
+        resolve: {
+          locationData: function () {
+            return {
+              locationName: vm.location.name,
+              locationId: vm.location._id
+            };
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.location.openingHours.push(result);
+      });
+    };
   };
 })();
