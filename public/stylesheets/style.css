@@ -10,3 +10,9 @@
   margin-left: 4px;
   color: black;
 }
+
+@media screen and (min-width: 768px) {
+  .modal-dialog {
+       left: 0;
+  }
+}

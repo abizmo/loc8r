@@ -5,6 +5,7 @@ var dbURI = "mongodb://localhost/loc8r";
 if ( process.env.NODE_ENV === "production") {
   dbURI = process.env.MONGOLAB_URI;
 }
+mongoose.Promise = global.Promise;
 mongoose.connect(dbURI);
 
 var db = mongoose.connection;
