@@ -1,3 +1,4 @@
+const dotenv = require('dotenv');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -36,7 +37,7 @@ var appClientFiles = {
 };
 
 var uglified = uglify.minify(appClientFiles, { compress: false });
-console.log(uglified);
+
 fs.writeFile('public/angular/loc8r.min.js', uglified.code, function (err) {
   if (err) {
     console.log(err);

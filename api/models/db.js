@@ -47,4 +47,5 @@ process.on('SIGTERM', function () {
   });
 });
 
-require('./location');
+require('./locations');
+require('./users');
