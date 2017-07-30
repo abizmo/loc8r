@@ -3,6 +3,7 @@ var router = express.Router();
 var locations = require('../controllers/locations');
 var reviews = require('../controllers/reviews');
 var times = require('../controllers/times');
+var auth = require('../controllers/authentication');
 
 // LOCATIONS ROUTES
 // locations list: get /api/locations/
@@ -35,5 +36,9 @@ router.post('/locations/:locationId/times', times.create);
 router.put('/locations/:locationId/times/:timeId', times.update);
 // time delete: delete /api/locations/:locationid/times/:timeid
 router.delete('/locations/:locationId/times/:timeId', times.delete);
+
+// AUTH ROUTES
+router.post('/register', auth.register);
+router.post('/login', auth.login);
 
 module.exports = router;
