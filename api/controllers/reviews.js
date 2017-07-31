@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Location = mongoose.model('Location');
 var shared = require('./shared');
+var User = mongoose.model('User');
 
 var setRating = function (location) {
   if (location.reviews && location.reviews.length > 0) {
@@ -35,9 +36,9 @@ var updateRatingAverage = function (locationId) {
     });
 };
 
-var addReview = function (req, res, location) {
+var addReview = function (req, res, location, userName) {
     var review = {
-      author: req.body.author,
+      author: userName,
       rating: req.body.rating,
       reviewText: req.body.reviewText
     }
@@ -51,6 +52,27 @@ var addReview = function (req, res, location) {
         shared.sendResponse(res, 201, review);
       }
     });
+};
+
+var getAuthor = function (req, res, cb) {
+  if (req.payload && req.payload.email) {
+    User
+      .findOne({ email: req.payload.email })
+      .exec(function (err, user) {
+        if (err) {
+          shared.sendResponse(res, 404, err);
+          return;
+        }
+        if (!user) {
+          shared.sendResponse(res, 404, { message: "User not found" });
+          return;
+        }
+        cb(req, res, user.name);
+      });
+  } else {
+    shared.sendResponse(res, 404, { message: "User not found!" });
+    return;
+  }
 };
 
 module.exports.show = function (req, res) {
@@ -89,24 +111,26 @@ module.exports.show = function (req, res) {
 };
 
 module.exports.create = function (req, res) {
-  if (req.params && req.params.locationId) {
-    Location.findById(req.params.locationId)
-      .select('reviews')
-      .exec(function (err, location) {
-        if (!location) {
-          shared.sendResponse(res, 404, { message: "Location not found!" });
-          return;
-        }
-        if (err) {
-          shared.sendResponse(res, 400, err);
-          return;
-        }
+  getAuthor(req, res, function (req, res, userName) {
+    if (req.params && req.params.locationId) {
+      Location.findById(req.params.locationId)
+        .select('reviews')
+        .exec(function (err, location) {
+          if (!location) {
+            shared.sendResponse(res, 404, { message: "Location not found!" });
+            return;
+          }
+          if (err) {
+            shared.sendResponse(res, 400, err);
+            return;
+          }
 
-        addReview(req, res, location);
-    });
-  } else {
-    shared.sendResponse(res, 404, { message: "Location Id missing!" })
-  }
+          addReview(req, res, location, userName);
+      });
+    } else {
+      shared.sendResponse(res, 404, { message: "Location Id missing!" })
+    }
+  });
 };
 
 module.exports.update = function (req, res) {
