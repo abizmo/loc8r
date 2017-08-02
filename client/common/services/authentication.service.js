@@ -30,12 +30,41 @@
       $window.localStorage.removeItem('loc8r-token');
     };
 
+    function isLoggedIn() {
+      var token;
+      token = getToken();
+
+      if (token) {
+        var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+        return payload.exp > Date.now() /1000;
+      }
+
+      return false;
+    };
+
+    function currentUser() {
+      if (isLoggedIn()){
+        var token;
+        token = getToken();
+
+        var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+        return {
+          email: payload.email,
+          name: payload.name
+        };
+      }
+    };
+
     return {
       saveToken: saveToken,
       getToken: getToken,
       register: register,
       login: login,
-      logout: logout
+      logout: logout,
+      isLoggedIn: isLoggedIn,
+      currentUser: currentUser
     };
   };
 })();
