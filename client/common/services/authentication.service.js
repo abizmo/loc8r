@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('loc8r')
+    .module('loc8rApp')
     .service('authentication', ['$window', authentication]);
 
   function authentication ($window) {
