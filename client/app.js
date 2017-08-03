@@ -14,6 +14,11 @@
         controller: 'locationDetailCtrl',
         controllerAs: 'vm'
       })
+      .when('/register', {
+        templateUrl: 'auth/register/register.view.html',
+        controller: 'registerCtrl',
+        controllerAs: 'vm'
+      })
       .when('/about', {
         templateUrl: 'common/views/genericText.view.html',
         controller: 'aboutCtrl',
