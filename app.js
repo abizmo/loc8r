@@ -29,6 +29,7 @@ var appClientFiles = {
   "client/timeModal/timeModal.controller.js": fs.readFileSync("client/timeModal/timeModal.controller.js", "utf8"),
   "client/about/about.controller.js": fs.readFileSync("client/about/about.controller.js", "utf8"),
   "client/auth/register/register.controller.js": fs.readFileSync("client/auth/register/register.controller.js", "utf8"),
+  "client/auth/login/login.controller.js": fs.readFileSync("client/auth/login/login.controller.js", "utf8"),
   "client/common/services/loc8rData.service.js": fs.readFileSync("client/common/services/loc8rData.service.js", "utf8"),
   "client/common/services/geolocation.service.js": fs.readFileSync("client/common/services/geolocation.service.js", "utf8"),
   "client/common/services/authentication.service.js": fs.readFileSync("client/common/services/authentication.service.js", "utf8"),
