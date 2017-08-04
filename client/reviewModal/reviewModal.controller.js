@@ -1,9 +1,9 @@
 (function () {
   angular
     .module('loc8rApp')
-    .controller('reviewModalCtrl', ['$uibModalInstance', 'locationData', 'loc8rData', reviewModalCtrl]);
+    .controller('reviewModalCtrl', ['$uibModalInstance', 'locationData', 'loc8rData', 'authentication', reviewModalCtrl]);
 
-  function reviewModalCtrl($uibModalInstance, locationData, loc8rData) {
+  function reviewModalCtrl($uibModalInstance, locationData, loc8rData, authentication) {
     var vm = this;
 
     vm.formData = {};
@@ -20,7 +20,7 @@
 
     vm.onSubmit = function () {
       vm.formError = "";
-      if (!vm.formData.name || !vm.formData.rating || !vm.formData.reviewText) {
+      if (!vm.formData.rating || !vm.formData.reviewText) {
         vm.formError = "All fields are required, please try again";
         return false;
       } else {
@@ -30,7 +30,6 @@
 
     vm.doAddReview = function (locationId, formData) {
       loc8rData.addReviewById(locationId, {
-        author: formData.name,
         rating: formData.rating,
         reviewText: formData.reviewText
       })

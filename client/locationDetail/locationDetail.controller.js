@@ -1,9 +1,9 @@
 (function () {
   angular
     .module('loc8rApp')
-    .controller('locationDetailCtrl', ['$routeParams', '$uibModal', 'loc8rData', locationDetailCtrl]);
+    .controller('locationDetailCtrl', ['$routeParams', '$uibModal', '$location', 'authentication', 'loc8rData', locationDetailCtrl]);
 
-  function locationDetailCtrl($routeParams, $uibModal, loc8rData) {
+  function locationDetailCtrl($routeParams, $uibModal, $location, authentication, loc8rData) {
     var vm = this;
     vm.locationId = $routeParams.locationId;
 
@@ -57,5 +57,9 @@
         vm.location.openingHours.push(result);
       });
     };
+
+    vm.currentPath = $location.path();
+
+    vm.isLoggedIn = authentication.isLoggedIn();
   };
 })();

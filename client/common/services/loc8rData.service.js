@@ -1,9 +1,9 @@
 (function () {
   angular
     .module('loc8rApp')
-    .service('loc8rData', ['$http', loc8rData]);
+    .service('loc8rData', ['$http', 'authentication', loc8rData]);
 
-  function loc8rData($http) {
+  function loc8rData($http, authentication) {
     var locationByCoords = function (lng, lat) {
       return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=20000');
     };
@@ -13,7 +13,11 @@
     };
 
     var addReviewById = function (locationId, reviewData) {
-      return $http.post('/api/locations/' + locationId + '/reviews', reviewData);
+      return $http.post('/api/locations/' + locationId + '/reviews', reviewData, {
+        headers: {
+          Authorization: 'Bearer ' + authentication.getToken()
+        }
+      });
     };
 
     var addTimeById = function (locationId, timeData) {
