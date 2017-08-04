@@ -6,7 +6,8 @@
   function headerComponent() {
     return {
       restric: 'EA',
-      templateUrl: '/common/directives/headerComponent/headerComponent.template.html'
+      templateUrl: '/common/directives/headerComponent/headerComponent.template.html',
+      controller: 'navigationCtrl as navvm'
     };
   };
 })();

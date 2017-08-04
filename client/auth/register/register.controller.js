@@ -37,6 +37,6 @@
       }
     };
 
-    vm.returnPage = $location.search.page || '/';
+    vm.returnPage = $location.search('page') || '/';
   };
 })();
